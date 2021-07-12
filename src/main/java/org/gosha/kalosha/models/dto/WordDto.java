@@ -1,16 +1,18 @@
 package org.gosha.kalosha.models.dto;
 
+import org.gosha.kalosha.models.Word;
+
 import java.util.Map;
 
 public class WordDto
 {
-    private String word;
+    private final String word;
 
-    private String lemma;
+    private final String lemma;
 
-    private String pos;
+    private final String pos;
 
-    private Map<String, String> gram;
+    private final Map<String, String> gram;
 
     public WordDto(String word, String lemma, String pos, Map<String, String> gram)
     {
@@ -18,6 +20,11 @@ public class WordDto
         this.lemma = lemma;
         this.pos = pos;
         this.gram = gram;
+    }
+
+    public static WordDto fromWord(Word w)
+    {
+        return new WordDto(w.getWord(), w.getLemma(), w.getPos(), w.getGram());
     }
 
     public String getWord()

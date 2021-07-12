@@ -34,9 +34,7 @@ public class QueryService
         {
             throw new NoSentencesFoundException("No sentences found");
         }
-        return sentences.stream()
-                .map(x -> new SentenceDto(x.getId(), x.getOriginalSentence()))
-                .toList();
+        return sentences.stream().map(SentenceDto::fromSentence).toList();
     }
 
     public List<SentenceDto> getBySimpleQuery(String queryString, int page, int maxResults)
@@ -46,9 +44,7 @@ public class QueryService
         {
             throw new NoSentencesFoundException("No sentences found");
         }
-        return sentences.stream()
-                .map(x -> new SentenceDto(x.getId(), x.getOriginalSentence()))
-                .toList();
+        return sentences.stream().map(SentenceDto::fromSentence).toList();
     }
 
     public List<WordDto> getWordlist(long id)
@@ -58,12 +54,7 @@ public class QueryService
         {
             throw new NoSentencesFoundException("Sentence with id " + id + " does not exist");
         }
-        return s.getWordList()
-                .stream()
-                .map(x -> new WordDto(
-                        x.getWord(), x.getLemma(),
-                        x.getPos(), x.getGram()
-                )).toList();
+        return s.getWordList().stream().map(WordDto::fromWord).toList();
     }
 
     private void fillComplexQueryMethodsMap()
