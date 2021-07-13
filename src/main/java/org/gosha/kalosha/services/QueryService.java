@@ -3,8 +3,8 @@ package org.gosha.kalosha.services;
 import org.gosha.kalosha.dao.SentenceDao;
 import org.gosha.kalosha.exception_handing.NoSentencesFoundException;
 import org.gosha.kalosha.models.Sentence;
-import org.gosha.kalosha.models.dto.SentenceDto;
-import org.gosha.kalosha.models.dto.WordDto;
+import org.gosha.kalosha.dto.SentenceDto;
+import org.gosha.kalosha.dto.WordDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

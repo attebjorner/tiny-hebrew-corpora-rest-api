@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class WordService
 {
-    private WordDao wordDao;
+    private final WordDao wordDao;
 
     @Autowired
     public WordService(WordDao wordDao)

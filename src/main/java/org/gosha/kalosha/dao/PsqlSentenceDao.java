@@ -2,34 +2,39 @@ package org.gosha.kalosha.dao;
 
 import org.gosha.kalosha.models.Sentence;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Map;
 
 @Repository
 public class PsqlSentenceDao implements SentenceDao
 {
-    private final Session session;
+    private final SessionFactory sessionFactory;
 
     @Autowired
-    public PsqlSentenceDao(EntityManager entityManager)
+    public PsqlSentenceDao(SessionFactory sessionFactory)
     {
-        session = entityManager.unwrap(Session.class);
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
+    @Transactional
     public Sentence getById(long id)
     {
-        return session.get(Sentence.class, id);
+        return sessionFactory.getCurrentSession().get(Sentence.class, id);
     }
 
+    @Override
+    @Transactional
     public List<Sentence> getByQuery(String queryString, int page, int maxResults)
     {
-        return session.createQuery("from Sentence where originalSentence like :query", Sentence.class)
+        return sessionFactory.getCurrentSession()
+                .createQuery("from Sentence where originalSentence like :query", Sentence.class)
                 .setParameter("query", "%" + queryString + "%")
                 .setFirstResult(page * maxResults)
                 .setMaxResults(maxResults)
@@ -37,9 +42,12 @@ public class PsqlSentenceDao implements SentenceDao
                 .toList();
     }
 
+    @Override
+    @Transactional
     public List<Sentence> getByLemma(String lemma, int page, int maxResults)
     {
-        return session.createQuery("select distinct s from Word w join w.sentences s where w.lemma = :lemma", Sentence.class)
+        return sessionFactory.getCurrentSession()
+                .createQuery("select distinct s from Word w join w.sentences s where w.lemma = :lemma", Sentence.class)
                 .setParameter("lemma", lemma)
                 .setFirstResult(page * maxResults)
                 .setMaxResults(maxResults)
@@ -48,9 +56,11 @@ public class PsqlSentenceDao implements SentenceDao
     }
 
     @Override
+    @Transactional
     public List<Sentence> getByPos(String pos, int page, int maxResults)
     {
-        return session.createQuery("select distinct s from Word w join w.sentences s where w.pos = :pos", Sentence.class)
+        return sessionFactory.getCurrentSession()
+                .createQuery("select distinct s from Word w join w.sentences s where w.pos = :pos", Sentence.class)
                 .setParameter("pos", pos)
                 .setFirstResult(page * maxResults)
                 .setMaxResults(maxResults)
@@ -59,6 +69,7 @@ public class PsqlSentenceDao implements SentenceDao
     }
 
     @Override
+    @Transactional
     public List<Sentence> getByGram(Map<String, String> gram, int page, int maxResults)
     {
         Query<Sentence> query = buildGramQuery(
@@ -71,9 +82,11 @@ public class PsqlSentenceDao implements SentenceDao
     }
 
     @Override
+    @Transactional
     public List<Sentence> getByLemmaPos(String lemma, String pos, int page, int maxResults)
     {
-        return session.createQuery("select distinct s from Word w join w.sentences s where w.lemma = :lemma and w.pos = :pos", Sentence.class)
+        return sessionFactory.getCurrentSession()
+                .createQuery("select distinct s from Word w join w.sentences s where w.lemma = :lemma and w.pos = :pos", Sentence.class)
                 .setParameter("lemma", lemma)
                 .setParameter("pos", pos)
                 .setFirstResult(page * maxResults)
@@ -83,6 +96,7 @@ public class PsqlSentenceDao implements SentenceDao
     }
 
     @Override
+    @Transactional
     public List<Sentence> getByLemmaGram(String lemma, Map<String, String> gram, int page, int maxResults)
     {
         Query<Sentence> query = buildGramQuery(
@@ -97,6 +111,7 @@ public class PsqlSentenceDao implements SentenceDao
     }
 
     @Override
+    @Transactional
     public List<Sentence> getByPosGram(String pos, Map<String, String> gram, int page, int maxResults)
     {
         Query<Sentence> query = buildGramQuery(
@@ -111,6 +126,7 @@ public class PsqlSentenceDao implements SentenceDao
     }
 
     @Override
+    @Transactional
     public List<Sentence> getByLemmaPosGram(String lemma, String pos, Map<String, String> gram, int page, int maxResults)
     {
         Query<Sentence> query = buildGramQuery(
@@ -134,7 +150,7 @@ public class PsqlSentenceDao implements SentenceDao
             properties[i] = "w.gram[:k" + i + "] = :v" + i;
         }
         queryString.append("(").append(String.join(" or ", properties)).append(")");
-        Query<Sentence> query = session.createQuery(queryString.toString(), Sentence.class);
+        Query<Sentence> query = sessionFactory.getCurrentSession().createQuery(queryString.toString(), Sentence.class);
         i = 0;
         for (String key : gram.keySet())
         {

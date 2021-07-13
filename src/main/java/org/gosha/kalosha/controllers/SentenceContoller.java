@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SentenceContoller
 {
-    private SentenceService sentenceService;
+    private final SentenceService sentenceService;
 
     @Autowired
     public SentenceContoller(SentenceService sentenceService)

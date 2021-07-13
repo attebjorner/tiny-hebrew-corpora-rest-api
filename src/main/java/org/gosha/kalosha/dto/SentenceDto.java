@@ -1,4 +1,4 @@
-package org.gosha.kalosha.models.dto;
+package org.gosha.kalosha.dto;
 
 import org.gosha.kalosha.models.Sentence;
 

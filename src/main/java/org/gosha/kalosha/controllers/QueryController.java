@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class QueryController
 {
-    private QueryService queryService;
+    private final QueryService queryService;
 
     @Autowired
     public QueryController(QueryService queryService)

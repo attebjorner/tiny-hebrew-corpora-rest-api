@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SentenceService
 {
-    private SentenceDao sentenceDao;
+    private final SentenceDao sentenceDao;
 
     @Autowired
     public SentenceService(SentenceDao sentenceDao)
