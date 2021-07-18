@@ -1,6 +1,6 @@
 package org.gosha.kalosha.dao;
 
-import org.gosha.kalosha.models.Word;
+import org.gosha.kalosha.model.Word;
 
 public interface WordDao
 {

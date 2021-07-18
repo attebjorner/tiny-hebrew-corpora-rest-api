@@ -1,6 +1,6 @@
 package org.gosha.kalosha.dto;
 
-import org.gosha.kalosha.models.Word;
+import org.gosha.kalosha.model.Word;
 
 import java.util.Map;
 

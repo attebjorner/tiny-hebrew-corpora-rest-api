@@ -1,6 +1,6 @@
 package org.gosha.kalosha.dao;
 
-import org.gosha.kalosha.models.Word;
+import org.gosha.kalosha.model.Word;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

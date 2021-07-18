@@ -1,7 +1,6 @@
 package org.gosha.kalosha.dao;
 
-import org.gosha.kalosha.models.Sentence;
-import org.hibernate.Session;
+import org.gosha.kalosha.model.Sentence;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 public class PsqlSentenceDao implements SentenceDao
@@ -39,7 +39,7 @@ public class PsqlSentenceDao implements SentenceDao
                 .setFirstResult(page * maxResults)
                 .setMaxResults(maxResults)
                 .getResultStream()
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -52,7 +52,7 @@ public class PsqlSentenceDao implements SentenceDao
                 .setFirstResult(page * maxResults)
                 .setMaxResults(maxResults)
                 .getResultStream()
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -65,7 +65,7 @@ public class PsqlSentenceDao implements SentenceDao
                 .setFirstResult(page * maxResults)
                 .setMaxResults(maxResults)
                 .getResultStream()
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -78,7 +78,7 @@ public class PsqlSentenceDao implements SentenceDao
         return query.setFirstResult(page * maxResults)
                 .setMaxResults(maxResults)
                 .getResultStream()
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -92,7 +92,7 @@ public class PsqlSentenceDao implements SentenceDao
                 .setFirstResult(page * maxResults)
                 .setMaxResults(maxResults)
                 .getResultStream()
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -107,7 +107,7 @@ public class PsqlSentenceDao implements SentenceDao
                 .setFirstResult(page * maxResults)
                 .setMaxResults(maxResults)
                 .getResultStream()
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -122,7 +122,7 @@ public class PsqlSentenceDao implements SentenceDao
                 .setFirstResult(page * maxResults)
                 .setMaxResults(maxResults)
                 .getResultStream()
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -138,7 +138,7 @@ public class PsqlSentenceDao implements SentenceDao
                 .setFirstResult(page * maxResults)
                 .setMaxResults(maxResults)
                 .getResultStream()
-                .toList();
+                .collect(Collectors.toList());
     }
 
     private Query<Sentence> buildGramQuery(StringBuilder queryString, Map<String, String> gram)

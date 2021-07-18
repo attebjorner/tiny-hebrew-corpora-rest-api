@@ -42,9 +42,9 @@ public class SpringConfig implements WebMvcConfigurer
         {
             e.printStackTrace();
         }
-        dataSource.setJdbcUrl("jdbc:postgresql://localhost:5432/hebara_copy");
-        dataSource.setUser("hebaraadmin");
-        dataSource.setPassword("17421");
+        dataSource.setJdbcUrl("jdbc:postgresql://localhost:5432/theappdb");
+        dataSource.setUser("theuser");
+        dataSource.setPassword("123");
         return dataSource;
     }
 

@@ -1,6 +1,6 @@
 package org.gosha.kalosha.dto;
 
-import org.gosha.kalosha.models.Sentence;
+import org.gosha.kalosha.model.Sentence;
 
 public class SentenceDto
 {

@@ -1,6 +1,6 @@
 package org.gosha.kalosha.dao;
 
-import org.gosha.kalosha.models.Sentence;
+import org.gosha.kalosha.model.Sentence;
 
 import java.util.List;
 import java.util.Map;
