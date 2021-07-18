@@ -23,14 +23,12 @@ public class PsqlSentenceDao implements SentenceDao
     }
 
     @Override
-    @Transactional
     public Sentence getById(long id)
     {
         return sessionFactory.getCurrentSession().get(Sentence.class, id);
     }
 
     @Override
-    @Transactional
     public List<Sentence> getByQuery(String queryString, int page, int maxResults)
     {
         return sessionFactory.getCurrentSession()
@@ -43,7 +41,6 @@ public class PsqlSentenceDao implements SentenceDao
     }
 
     @Override
-    @Transactional
     public List<Sentence> getByLemma(String lemma, int page, int maxResults)
     {
         return sessionFactory.getCurrentSession()
@@ -56,7 +53,6 @@ public class PsqlSentenceDao implements SentenceDao
     }
 
     @Override
-    @Transactional
     public List<Sentence> getByPos(String pos, int page, int maxResults)
     {
         return sessionFactory.getCurrentSession()
@@ -69,7 +65,6 @@ public class PsqlSentenceDao implements SentenceDao
     }
 
     @Override
-    @Transactional
     public List<Sentence> getByGram(Map<String, String> gram, int page, int maxResults)
     {
         Query<Sentence> query = buildGramQuery(
@@ -82,7 +77,6 @@ public class PsqlSentenceDao implements SentenceDao
     }
 
     @Override
-    @Transactional
     public List<Sentence> getByLemmaPos(String lemma, String pos, int page, int maxResults)
     {
         return sessionFactory.getCurrentSession()
@@ -96,7 +90,6 @@ public class PsqlSentenceDao implements SentenceDao
     }
 
     @Override
-    @Transactional
     public List<Sentence> getByLemmaGram(String lemma, Map<String, String> gram, int page, int maxResults)
     {
         Query<Sentence> query = buildGramQuery(
@@ -111,7 +104,6 @@ public class PsqlSentenceDao implements SentenceDao
     }
 
     @Override
-    @Transactional
     public List<Sentence> getByPosGram(String pos, Map<String, String> gram, int page, int maxResults)
     {
         Query<Sentence> query = buildGramQuery(
@@ -126,7 +118,6 @@ public class PsqlSentenceDao implements SentenceDao
     }
 
     @Override
-    @Transactional
     public List<Sentence> getByLemmaPosGram(String lemma, String pos, Map<String, String> gram, int page, int maxResults)
     {
         Query<Sentence> query = buildGramQuery(

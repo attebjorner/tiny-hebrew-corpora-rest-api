@@ -7,6 +7,7 @@ import org.gosha.kalosha.dto.SentenceDto;
 import org.gosha.kalosha.dto.WordDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.function.Function;
@@ -26,6 +27,7 @@ public class DefaultQueryService implements QueryService
     }
 
     @Override
+    @Transactional
     public List<SentenceDto> getByParameters(TreeMap<String, Object> query, int page, int maxResults)
     {
         List<Object> values = new ArrayList<>(query.values());
@@ -40,6 +42,7 @@ public class DefaultQueryService implements QueryService
     }
 
     @Override
+    @Transactional
     public List<SentenceDto> getBySimpleQuery(String queryString, int page, int maxResults)
     {
         List<Sentence> sentences = sentenceDao.getByQuery(queryString, page, maxResults);
@@ -51,6 +54,7 @@ public class DefaultQueryService implements QueryService
     }
 
     @Override
+    @Transactional
     public List<WordDto> getWordlist(long id)
     {
         Sentence s = sentenceDao.getById(id);

@@ -21,7 +21,7 @@ public class Word
 
     private String pos;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "wordform_gram",
             joinColumns = {@JoinColumn(name = "wordform_id", referencedColumnName = "id")}
