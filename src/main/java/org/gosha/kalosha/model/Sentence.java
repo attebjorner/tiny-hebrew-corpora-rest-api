@@ -37,13 +37,6 @@ public class Sentence
     {
     }
 
-    public Sentence(String originalSentence, String translation, LanguageType lang)
-    {
-        this.originalSentence = originalSentence;
-        this.translation = translation;
-        this.lang = lang;
-    }
-
     public long getId()
     {
         return id;

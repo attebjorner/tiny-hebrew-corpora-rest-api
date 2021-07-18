@@ -51,15 +51,6 @@ public class Word
     {
     }
 
-    public Word(String word, String lemma, String pos, String translation, LanguageType lang)
-    {
-        this.word = word;
-        this.lemma = lemma;
-        this.pos = pos;
-        this.translation = translation;
-        this.lang = lang;
-    }
-
     public long getId()
     {
         return id;
