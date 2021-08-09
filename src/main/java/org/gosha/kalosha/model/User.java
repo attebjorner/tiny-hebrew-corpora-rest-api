@@ -20,6 +20,7 @@ public class User
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles")
     private Collection<Role> roles = new ArrayList<>();
 
     public User()
