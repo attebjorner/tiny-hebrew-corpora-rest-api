@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -23,7 +24,6 @@ public class DefaultQueryService implements QueryService
     public DefaultQueryService(SentenceDao sentenceDao)
     {
         this.sentenceDao = sentenceDao;
-        fillComplexQueryMethodsMap();
     }
 
     @Override
@@ -65,6 +65,7 @@ public class DefaultQueryService implements QueryService
         return s.getWordList().stream().map(WordDto::fromWord).collect(Collectors.toList());
     }
 
+    @PostConstruct
     private void fillComplexQueryMethodsMap()
     {
         COMPLEX_QUERY_METHODS.putAll(Map.of(
