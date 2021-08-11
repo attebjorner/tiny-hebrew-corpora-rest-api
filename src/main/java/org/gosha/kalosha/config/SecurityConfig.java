@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,21 +41,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
-        http.csrf().disable();
+        http.csrf().disable()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
         http.authorizeRequests().anyRequest().authenticated();
         http.formLogin().defaultSuccessUrl("/" + apiVersion + "/simple?query=1");
-        http.httpBasic();
-//        http.csrf().disable()
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//        http.authorizeRequests().anyRequest().permitAll();
-//        http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
+        http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
     }
 
-//    @Bean
-//    @Override
-//    public AuthenticationManager authenticationManagerBean() throws Exception
-//    {
-//        return super.authenticationManagerBean();
-//    }
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception
+    {
+        return super.authenticationManagerBean();
+    }
 }
