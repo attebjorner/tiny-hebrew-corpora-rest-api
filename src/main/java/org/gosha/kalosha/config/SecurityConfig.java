@@ -18,8 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter
 {
-    @Value("${api_version}")
-    private String apiVersion;
+    @Value("${base_endpoint}")
+    private String baseEndpoint;
 
     private final UserDetailsService userDetailsService;
 
@@ -41,11 +41,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
+        CustomAuthenticationFilter authenticationFilter
+                = new CustomAuthenticationFilter(authenticationManagerBean());
+        authenticationFilter.setFilterProcessesUrl(baseEndpoint + "login");
         http.csrf().disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.authorizeRequests()
+                .antMatchers(baseEndpoint + "query/**")
+                .hasAnyAuthority("USER");
+        http.authorizeRequests()
+                .antMatchers(baseEndpoint + "user/**", baseEndpoint + "users", baseEndpoint + "role/**")
+                .hasAnyAuthority("ADMIN");
         http.authorizeRequests().anyRequest().authenticated();
-        http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
+        http.addFilter(authenticationFilter);
     }
 
     @Bean

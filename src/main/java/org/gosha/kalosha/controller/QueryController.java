@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 @RestController
-@RequestMapping("${api_version}")
+@RequestMapping("${api_version}" + "/query")
 public class QueryController
 {
     private final QueryService queryService;

@@ -4,7 +4,7 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 import javax.servlet.ServletRegistration;
 
-public class SpringMvcDicpatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer
+public class SpringMvcDispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer
 {
     @Override
     protected Class<?>[] getRootConfigClasses()
