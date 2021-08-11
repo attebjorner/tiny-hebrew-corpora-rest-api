@@ -20,7 +20,8 @@ import java.util.Properties;
 @Configuration
 @PropertySources({
         @PropertySource("classpath:app.properties"),
-        @PropertySource("classpath:db.properties")
+        @PropertySource("classpath:db.properties"),
+        @PropertySource("classpath:jwt.properties")
 })
 @ComponentScan(basePackages = "org.gosha.kalosha")
 @EnableWebMvc

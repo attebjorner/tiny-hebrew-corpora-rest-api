@@ -7,9 +7,11 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -28,8 +30,15 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class CustomAuthorizationFilter extends OncePerRequestFilter
 {
-    @Value("${base_endpoint}")
-    private String baseEndpoint;
+    private final String baseEndpoint;
+
+    private final String secret;
+
+    public CustomAuthorizationFilter(Environment env)
+    {
+        baseEndpoint = env.getProperty("base_endpoint");
+        secret = env.getProperty("jwt.secret");
+    }
 
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest request,
@@ -48,7 +57,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter
                 try
                 {
                     String token = authorizationHeader.substring("Bearer ".length());
-                    Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+                    Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
                     JWTVerifier verifier = JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = verifier.verify(token);
                     String username = decodedJWT.getSubject();
