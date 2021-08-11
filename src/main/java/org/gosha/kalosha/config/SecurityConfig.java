@@ -42,10 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
-//        http.authorizeRequests((requests) -> {
-//            ((ExpressionUrlAuthorizationConfigurer.AuthorizedUrl)requests.anyRequest()).authenticated();
-//        });
-//        http.authorizeRequests().anyRequest().permitAll();
+        http.csrf().disable();
         http.authorizeRequests().anyRequest().authenticated();
         http.formLogin().defaultSuccessUrl("/" + apiVersion + "/simple?query=1");
         http.httpBasic();
