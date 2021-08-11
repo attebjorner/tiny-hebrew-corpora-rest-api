@@ -3,10 +3,8 @@ package org.gosha.kalosha.config;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,7 +18,10 @@ import java.beans.PropertyVetoException;
 import java.util.Properties;
 
 @Configuration
-@PropertySource("classpath:app.properties")
+@PropertySources({
+        @PropertySource("classpath:app.properties"),
+        @PropertySource("classpath:db.properties")
+})
 @ComponentScan(basePackages = "org.gosha.kalosha")
 @EnableWebMvc
 @EnableTransactionManagement
@@ -28,10 +29,13 @@ public class SpringConfig implements WebMvcConfigurer
 {
     private final ApplicationContext applicationContext;
 
+    private final Environment env;
+
     @Autowired
-    public SpringConfig(ApplicationContext applicationContext)
+    public SpringConfig(ApplicationContext applicationContext, Environment env)
     {
         this.applicationContext = applicationContext;
+        this.env = env;
     }
 
     @Bean
@@ -40,15 +44,15 @@ public class SpringConfig implements WebMvcConfigurer
         ComboPooledDataSource dataSource = new ComboPooledDataSource();
         try
         {
-            dataSource.setDriverClass("org.postgresql.Driver");
+            dataSource.setDriverClass(env.getProperty("db.driver_class"));
         }
         catch (PropertyVetoException e)
         {
             e.printStackTrace();
         }
-        dataSource.setJdbcUrl("jdbc:postgresql://localhost:5432/theappdb");
-        dataSource.setUser("theuser");
-        dataSource.setPassword("123");
+        dataSource.setJdbcUrl(env.getProperty("db.jdbc_url"));
+        dataSource.setUser(env.getProperty("db.user"));
+        dataSource.setPassword(env.getProperty("db.password"));
         return dataSource;
     }
 
@@ -59,8 +63,8 @@ public class SpringConfig implements WebMvcConfigurer
         sessionFactory.setDataSource(dataSource());
         sessionFactory.setPackagesToScan("org.gosha.kalosha.model");
         Properties hibernateProperties = new Properties();
-        hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
-        hibernateProperties.setProperty("hibernate.show_sql", "true");
+        hibernateProperties.setProperty("hibernate.dialect", env.getProperty("db.hibernate.dialect"));
+        hibernateProperties.setProperty("hibernate.show_sql", env.getProperty("db.hibernate.show_sql"));
         sessionFactory.setHibernateProperties(hibernateProperties);
         return sessionFactory;
     }

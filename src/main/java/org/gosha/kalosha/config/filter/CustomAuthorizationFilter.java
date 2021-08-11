@@ -1,4 +1,4 @@
-package org.gosha.kalosha.filter;
+package org.gosha.kalosha.config.filter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;

@@ -1,7 +1,7 @@
 package org.gosha.kalosha.config;
 
-import org.gosha.kalosha.filter.CustomAuthenticationFilter;
-import org.gosha.kalosha.filter.CustomAuthorizationFilter;
+import org.gosha.kalosha.config.filter.CustomAuthenticationFilter;
+import org.gosha.kalosha.config.filter.CustomAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
