@@ -43,9 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     {
         http.csrf().disable()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().anyRequest().authenticated();
-        http.formLogin().defaultSuccessUrl("/" + apiVersion + "/simple?query=1");
         http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
     }
 
