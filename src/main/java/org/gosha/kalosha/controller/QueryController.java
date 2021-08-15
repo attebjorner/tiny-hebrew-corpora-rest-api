@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.TreeMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("${api_version}" + "/query")
@@ -26,19 +26,13 @@ public class QueryController
                                              @RequestParam(required = false) Integer page,
                                              @RequestParam(required = false, name = "max_results") Integer maxResults)
     {
-        return queryService.getBySimpleQuery(
-                query, (page == null) ? 0 : page - 1, (maxResults == null) ? 10 : maxResults
-        );
+        return queryService.getBySimpleQuery(query, page, maxResults);
     }
 
     @GetMapping("complex")
-    public List<SentenceDto> makeComplexQuery(@RequestBody TreeMap<String, Object> query,
-                                              @RequestParam(required = false) Integer page,
-                                              @RequestParam(required = false, name = "max_results") Integer maxResults)
+    public List<SentenceDto> makeComplexQuery(@RequestParam Map<String, Object> query)
     {
-        return queryService.getByParameters(
-                query, (page == null) ? 0 : page - 1, (maxResults == null) ? 10 : maxResults
-        );
+        return queryService.getByParameters(query);
     }
 
     @GetMapping("wordlist/{id}")

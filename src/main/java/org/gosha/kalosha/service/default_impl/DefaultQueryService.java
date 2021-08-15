@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -29,12 +30,31 @@ public class DefaultQueryService implements QueryService
 
     @Override
     @Transactional
-    public List<SentenceDto> getByParameters(TreeMap<String, Object> query, int page, int maxResults)
+    public List<SentenceDto> getByParameters(Map<String, Object> query)
     {
-        List<Object> values = new ArrayList<>(query.values());
+        int page = query.containsKey("page")
+                ? Integer.parseInt((String) query.get("page")) - 1 : 0;
+        int maxResults = query.containsKey("max_results")
+                ? Integer.parseInt((String) query.get("max_results")) : 10;
+        query.remove("page");
+        query.remove("max_results");
+
+        Map<String, Object> sortedQuery = new TreeMap<>();
+        if (query.containsKey("pos")) sortedQuery.put("pos", query.get("pos"));
+        if (query.containsKey("lemma")) sortedQuery.put("lemma", query.get("lemma"));
+        query.remove("pos");
+        query.remove("lemma");
+        sortedQuery.putAll(Map.of("gram", query));
+
+        Function<Object[], List<Sentence>> daoMethod = COMPLEX_QUERY_METHODS.get(sortedQuery.keySet());
+        if (daoMethod == null)
+        {
+            throw new IllegalStateException("Wrong query parameters");
+        }
+        List<Object> values = new ArrayList<>(sortedQuery.values());
         values.add(page);
         values.add(maxResults);
-        List<Sentence> sentences = COMPLEX_QUERY_METHODS.get(query.keySet()).apply(values.toArray());
+        List<Sentence> sentences = daoMethod.apply(values.toArray());
         if (sentences.isEmpty())
         {
             throw new NoSentencesFoundException("No sentences found");
@@ -44,9 +64,11 @@ public class DefaultQueryService implements QueryService
 
     @Override
     @Transactional
-    public List<SentenceDto> getBySimpleQuery(String queryString, int page, int maxResults)
+    public List<SentenceDto> getBySimpleQuery(String queryString, Integer page, Integer maxResults)
     {
-        List<Sentence> sentences = sentenceDao.getByQuery(queryString, page, maxResults);
+        List<Sentence> sentences = sentenceDao.getByQuery(
+                queryString, (page == null) ? 0 : page - 1, (maxResults == null) ? 10 : maxResults
+        );
         if (sentences.isEmpty())
         {
             throw new NoSentencesFoundException("No sentences found");
