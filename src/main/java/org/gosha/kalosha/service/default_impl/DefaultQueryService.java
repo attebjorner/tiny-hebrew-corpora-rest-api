@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 public class DefaultQueryService implements QueryService
 {
     private final SentenceDao sentenceDao;
+
     private static final Map<Set<String>, Function<Object[], List<Sentence>>> COMPLEX_QUERY_METHODS = new HashMap<>();
 
     @Autowired

@@ -1,5 +1,9 @@
 package org.gosha.kalosha.model;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Map;
 import java.util.Objects;
@@ -7,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "wordforms")
+@Data
 public class Word
 {
     @Id
@@ -46,110 +51,4 @@ public class Word
     @Enumerated
     @Column(columnDefinition = "int")
     private LanguageType lang;
-
-    public Word()
-    {
-    }
-
-    public long getId()
-    {
-        return id;
-    }
-
-    public void setId(long id)
-    {
-        this.id = id;
-    }
-
-    public String getWord()
-    {
-        return word;
-    }
-
-    public void setWord(String wordForm)
-    {
-        this.word = wordForm;
-    }
-
-    public String getLemma()
-    {
-        return lemma;
-    }
-
-    public void setLemma(String lemma)
-    {
-        this.lemma = lemma;
-    }
-
-    public String getPos()
-    {
-        return pos;
-    }
-
-    public void setPos(String pos)
-    {
-        this.pos = pos;
-    }
-
-    public Map<String, String> getGram()
-    {
-        return gram;
-    }
-
-    public void setGram(Map<String, String> gram)
-    {
-        this.gram = gram;
-    }
-
-    public String getTranslation()
-    {
-        return translation;
-    }
-
-    public void setTranslation(String translation)
-    {
-        this.translation = translation;
-    }
-
-    public Set<Sentence> getSentences()
-    {
-        return sentences;
-    }
-
-    public void setSentences(Set<Sentence> sentences)
-    {
-        this.sentences = sentences;
-    }
-
-    public LanguageType getLang()
-    {
-        return lang;
-    }
-
-    public void setLang(LanguageType lang)
-    {
-        this.lang = lang;
-    }
-
-    @Override
-    public boolean equals(Object o)
-    {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Word word1 = (Word) o;
-        return id == word1.id
-                && Objects.equals(word, word1.word)
-                && Objects.equals(lemma, word1.lemma)
-                && Objects.equals(pos, word1.pos)
-                && Objects.equals(gram, word1.gram)
-                && Objects.equals(translation, word1.translation)
-                && Objects.equals(sentences, word1.sentences)
-                && lang == word1.lang;
-    }
-
-    @Override
-    public int hashCode()
-    {
-        return Objects.hash(id, word, lemma, pos, gram, translation, sentences, lang);
-    }
 }

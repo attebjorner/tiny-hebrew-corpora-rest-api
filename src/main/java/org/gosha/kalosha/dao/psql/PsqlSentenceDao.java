@@ -33,7 +33,7 @@ public class PsqlSentenceDao implements SentenceDao
     public List<Sentence> getByQuery(String queryString, int page, int maxResults)
     {
         return sessionFactory.getCurrentSession()
-                .createQuery("from Sentence where originalSentence like :query", Sentence.class)
+                .createQuery("Sentence where originalSentence like :query", Sentence.class)
                 .setParameter("query", "%" + queryString + "%")
                 .setFirstResult(page * maxResults)
                 .setMaxResults(maxResults)

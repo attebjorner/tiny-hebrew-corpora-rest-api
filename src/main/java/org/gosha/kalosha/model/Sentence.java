@@ -1,10 +1,14 @@
 package org.gosha.kalosha.model;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "sentences")
+@Data
 public class Sentence
 {
     @Id
@@ -32,58 +36,4 @@ public class Sentence
     @Enumerated
     @Column(columnDefinition = "int")
     private LanguageType lang;
-
-    public Sentence()
-    {
-    }
-
-    public long getId()
-    {
-        return id;
-    }
-
-    public void setId(long id)
-    {
-        this.id = id;
-    }
-
-    public List<Word> getWordList()
-    {
-        return wordList;
-    }
-
-    public void setWordList(List<Word> wordList)
-    {
-        this.wordList = wordList;
-    }
-
-    public String getOriginalSentence()
-    {
-        return originalSentence;
-    }
-
-    public void setOriginalSentence(String originalSentence)
-    {
-        this.originalSentence = originalSentence;
-    }
-
-    public String getTranslation()
-    {
-        return translation;
-    }
-
-    public void setTranslation(String translation)
-    {
-        this.translation = translation;
-    }
-
-    public LanguageType getLang()
-    {
-        return lang;
-    }
-
-    public void setLang(LanguageType lang)
-    {
-        this.lang = lang;
-    }
 }
