@@ -19,9 +19,36 @@ public class PsqlWordDao implements WordDao
     }
 
     @Override
-    @Transactional
     public Word getById(long id)
     {
         return sessionFactory.getCurrentSession().get(Word.class, id);
+    }
+
+    @Override
+    public Long getIdByWord(Word word)
+    {
+        return sessionFactory
+                .getCurrentSession()
+                .createQuery("select w.id from Word w where w.word = :word and w.lemma = :lemma " +
+                        "and w.pos = :pos and w.gram = :gram", Long.class)
+                .setParameter("word", word.getWord())
+                .setParameter("lemma", word.getLemma())
+                .setParameter("pos", word.getPos())
+                .setParameter("gram", word.getGram())
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
+    public void save(Word word)
+    {
+
+    }
+
+    @Override
+    public void delete()
+    {
+
     }
 }

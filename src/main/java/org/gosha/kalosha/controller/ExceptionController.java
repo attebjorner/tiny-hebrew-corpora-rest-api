@@ -1,6 +1,7 @@
 package org.gosha.kalosha.controller;
 
 import org.gosha.kalosha.exception_handing.NoSentencesFoundException;
+import org.gosha.kalosha.exception_handing.NoWordsFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,6 +16,12 @@ public class ExceptionController
 {
     @ExceptionHandler
     public ResponseEntity<Map<String, String>> handleNoSentencesFound(NoSentencesFoundException e)
+    {
+        return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<Map<String, String>> handleNoWordsFound(NoWordsFoundException e)
     {
         return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.BAD_REQUEST);
     }

@@ -9,7 +9,7 @@ import java.util.TreeMap;
 
 public interface QueryService
 {
-    List<SentenceDto> getByParameters(Map<String, Object> query);
+    List<SentenceDto> getByParameters(Map<String, Object> query, Integer page, Integer maxResults);
 
     List<SentenceDto> getBySimpleQuery(String queryString, Integer page, Integer maxResults);
 

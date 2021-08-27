@@ -31,31 +31,17 @@ public class DefaultQueryService implements QueryService
 
     @Override
     @Transactional
-    public List<SentenceDto> getByParameters(Map<String, Object> query)
+    public List<SentenceDto> getByParameters(Map<String, Object> query, Integer page, Integer maxResults)
     {
-        int page = query.containsKey("page")
-                ? Integer.parseInt((String) query.get("page")) - 1 : 0;
-        int maxResults = query.containsKey("max_results")
-                ? Integer.parseInt((String) query.get("max_results")) : 10;
-        query.remove("page");
-        query.remove("max_results");
-
-        Map<String, Object> sortedQuery = new TreeMap<>();
-        if (query.containsKey("pos")) sortedQuery.put("pos", query.get("pos"));
-        if (query.containsKey("lemma")) sortedQuery.put("lemma", query.get("lemma"));
-        query.remove("pos");
-        query.remove("lemma");
-        sortedQuery.putAll(Map.of("gram", query));
-
-        Function<Object[], List<Sentence>> daoMethod = COMPLEX_QUERY_METHODS.get(sortedQuery.keySet());
-        if (daoMethod == null)
+        List<Object> values = new ArrayList<>(query.values());
+        values.add((page == null) ? 0 : page - 1);
+        values.add((maxResults == null) ? 10 : maxResults);
+        var queryFunction = COMPLEX_QUERY_METHODS.get(query.keySet());
+        if (queryFunction == null)
         {
             throw new IllegalStateException("Wrong query parameters");
         }
-        List<Object> values = new ArrayList<>(sortedQuery.values());
-        values.add(page);
-        values.add(maxResults);
-        List<Sentence> sentences = daoMethod.apply(values.toArray());
+        List<Sentence> sentences = queryFunction.apply(values.toArray());
         if (sentences.isEmpty())
         {
             throw new NoSentencesFoundException("No sentences found");

@@ -5,4 +5,10 @@ import org.gosha.kalosha.model.Word;
 public interface WordDao
 {
     Word getById(long id);
+
+    Long getIdByWord(Word word);
+
+    void save(Word word);
+
+    void delete();
 }
