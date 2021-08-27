@@ -14,7 +14,7 @@ import java.util.Map;
 public class ExceptionController
 {
     @ExceptionHandler
-    public ResponseEntity<Map<String, String>> handleNoSentencesFoundException(NoSentencesFoundException e)
+    public ResponseEntity<Map<String, String>> handleNoSentencesFound(NoSentencesFoundException e)
     {
         return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.BAD_REQUEST);
     }
@@ -22,7 +22,13 @@ public class ExceptionController
     @ExceptionHandler
     public ResponseEntity<Map<String, String>> handleUnknownError(NoHandlerFoundException e)
     {
-        return new ResponseEntity<>(Map.of("error", "page not found"), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(Map.of("error", "Page not found"), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<Map<String, String>> handleIllegalState(IllegalStateException e)
+    {
+        return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler

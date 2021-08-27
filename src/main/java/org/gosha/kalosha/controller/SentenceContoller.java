@@ -1,19 +1,19 @@
 package org.gosha.kalosha.controller;
 
-import org.gosha.kalosha.service.WordService;
+import org.gosha.kalosha.service.SentenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("${api_version}")
-public class WordController
+public class SentenceContoller
 {
-    private final WordService wordService;
+    private final SentenceService sentenceService;
 
     @Autowired
-    public WordController(WordService wordService)
+    public SentenceContoller(SentenceService sentenceService)
     {
-        this.wordService = wordService;
+        this.sentenceService = sentenceService;
     }
 }

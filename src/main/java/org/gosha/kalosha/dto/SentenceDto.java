@@ -1,11 +1,15 @@
 package org.gosha.kalosha.dto;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.gosha.kalosha.model.Sentence;
 
 public class SentenceDto
 {
+    @Getter
     private final long id;
 
+    @Getter
     private final String originalSentence;
 
     public SentenceDto(long id, String originalSentence)
@@ -17,15 +21,5 @@ public class SentenceDto
     public static SentenceDto fromSentence(Sentence s)
     {
         return new SentenceDto(s.getId(), s.getOriginalSentence());
-    }
-
-    public long getId()
-    {
-        return id;
-    }
-
-    public String getOriginalSentence()
-    {
-        return originalSentence;
     }
 }
