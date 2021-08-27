@@ -1,6 +1,7 @@
 package org.gosha.kalosha.dao;
 
 import org.gosha.kalosha.model.Sentence;
+import org.gosha.kalosha.model.Word;
 
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,12 @@ import java.util.Map;
 public interface SentenceDao
 {
     Sentence getById(long id);
+
+    long save(Sentence sentence);
+
+    void update(Sentence sentence);
+
+    void delete(Sentence sentence);
 
     List<Sentence> getByQuery(String queryString, int page, int maxResults);
 

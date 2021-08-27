@@ -38,4 +38,25 @@ public class DefaultWordService implements WordService
         }
         return id;
     }
+
+    @Override
+    @Transactional
+    public long save(Word word)
+    {
+        return wordDao.save(word);
+    }
+
+    @Override
+    @Transactional
+    public void update(Word word)
+    {
+        wordDao.update(word);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Word word)
+    {
+        wordDao.delete(word);
+    }
 }

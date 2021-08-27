@@ -29,6 +29,24 @@ public class PsqlSentenceDao implements SentenceDao
     }
 
     @Override
+    public long save(Sentence sentence)
+    {
+        return (long) sessionFactory.getCurrentSession().save(sentence);
+    }
+
+    @Override
+    public void update(Sentence sentence)
+    {
+        sessionFactory.getCurrentSession().update(sentence);
+    }
+
+    @Override
+    public void delete(Sentence sentence)
+    {
+        sessionFactory.getCurrentSession().delete(sentence);
+    }
+
+    @Override
     public List<Sentence> getByQuery(String queryString, int page, int maxResults)
     {
         return sessionFactory.getCurrentSession()

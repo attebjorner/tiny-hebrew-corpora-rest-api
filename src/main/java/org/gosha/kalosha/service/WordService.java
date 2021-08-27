@@ -8,4 +8,10 @@ public interface WordService
     WordDto getById(long id);
 
     long getIdByWord(Word word);
+
+    long save(Word word);
+
+    void update(Word word);
+
+    void delete(Word word);
 }

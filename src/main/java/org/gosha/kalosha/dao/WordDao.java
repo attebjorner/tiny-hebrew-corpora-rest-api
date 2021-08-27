@@ -8,7 +8,9 @@ public interface WordDao
 
     Long getIdByWord(Word word);
 
-    void save(Word word);
+    long save(Word word);
 
-    void delete();
+    void update(Word word);
+
+    void delete(Word word);
 }

@@ -41,14 +41,20 @@ public class PsqlWordDao implements WordDao
     }
 
     @Override
-    public void save(Word word)
+    public long save(Word word)
     {
-
+        return (long) sessionFactory.getCurrentSession().save(word);
     }
 
     @Override
-    public void delete()
+    public void update(Word word)
     {
+        sessionFactory.getCurrentSession().update(word);
+    }
 
+    @Override
+    public void delete(Word word)
+    {
+        sessionFactory.getCurrentSession().delete(word);
     }
 }
