@@ -38,12 +38,6 @@ public class ExceptionController
     }
 
     @ExceptionHandler
-    public ResponseEntity<Map<String, String>> handleIllegalStateException(IllegalStateException e)
-    {
-        return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler
     public ResponseEntity<Map<String, String>> handleIllegalArgumentException(IllegalArgumentException e)
     {
         return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.BAD_REQUEST);

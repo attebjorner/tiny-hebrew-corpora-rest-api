@@ -32,12 +32,11 @@ public class PsqlSentenceDao implements SentenceDao
     public List<Sentence> getByQuery(String queryString, int page, int maxResults)
     {
         return sessionFactory.getCurrentSession()
-                .createQuery("Sentence where originalSentence like :query", Sentence.class)
+                .createQuery("select distinct s from Sentence s where s.originalSentence like :query", Sentence.class)
                 .setParameter("query", "%" + queryString + "%")
                 .setFirstResult(page * maxResults)
                 .setMaxResults(maxResults)
-                .getResultStream()
-                .collect(Collectors.toList());
+                .getResultList();
     }
 
     @Override
@@ -48,8 +47,7 @@ public class PsqlSentenceDao implements SentenceDao
                 .setParameter("lemma", lemma)
                 .setFirstResult(page * maxResults)
                 .setMaxResults(maxResults)
-                .getResultStream()
-                .collect(Collectors.toList());
+                .getResultList();
     }
 
     @Override
@@ -60,8 +58,7 @@ public class PsqlSentenceDao implements SentenceDao
                 .setParameter("pos", pos)
                 .setFirstResult(page * maxResults)
                 .setMaxResults(maxResults)
-                .getResultStream()
-                .collect(Collectors.toList());
+                .getResultList();
     }
 
     @Override
@@ -72,8 +69,7 @@ public class PsqlSentenceDao implements SentenceDao
         );
         return query.setFirstResult(page * maxResults)
                 .setMaxResults(maxResults)
-                .getResultStream()
-                .collect(Collectors.toList());
+                .getResultList();
     }
 
     @Override
@@ -85,8 +81,7 @@ public class PsqlSentenceDao implements SentenceDao
                 .setParameter("pos", pos)
                 .setFirstResult(page * maxResults)
                 .setMaxResults(maxResults)
-                .getResultStream()
-                .collect(Collectors.toList());
+                .getResultList();
     }
 
     @Override
@@ -99,8 +94,7 @@ public class PsqlSentenceDao implements SentenceDao
         return query.setParameter("lemma", lemma)
                 .setFirstResult(page * maxResults)
                 .setMaxResults(maxResults)
-                .getResultStream()
-                .collect(Collectors.toList());
+                .getResultList();
     }
 
     @Override
@@ -113,8 +107,7 @@ public class PsqlSentenceDao implements SentenceDao
         return query.setParameter("pos", pos)
                 .setFirstResult(page * maxResults)
                 .setMaxResults(maxResults)
-                .getResultStream()
-                .collect(Collectors.toList());
+                .getResultList();
     }
 
     @Override
@@ -128,8 +121,7 @@ public class PsqlSentenceDao implements SentenceDao
                 .setParameter("pos", pos)
                 .setFirstResult(page * maxResults)
                 .setMaxResults(maxResults)
-                .getResultStream()
-                .collect(Collectors.toList());
+                .getResultList();
     }
 
     private Query<Sentence> buildGramQuery(StringBuilder queryString, Map<String, String> gram)
