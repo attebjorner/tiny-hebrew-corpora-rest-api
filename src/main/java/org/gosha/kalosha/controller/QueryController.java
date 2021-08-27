@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 @RestController
+@RequestMapping("api/v1")
 public class QueryController
 {
     private final QueryService queryService;
@@ -30,8 +31,8 @@ public class QueryController
         );
     }
 
-    @GetMapping("complex")
-    public List<SentenceDto> makeComplexQuery(@RequestBody TreeMap<String, Object> query,
+    @PostMapping("complex")
+    public List<SentenceDto> makeComplexQuery(@RequestParam TreeMap<String, Object> query,
                                               @RequestParam(required = false) Integer page,
                                               @RequestParam(required = false, name = "max_results") Integer maxResults)
     {

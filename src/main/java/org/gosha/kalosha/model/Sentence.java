@@ -2,6 +2,7 @@ package org.gosha.kalosha.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "sentences")
@@ -85,5 +86,24 @@ public class Sentence
     public void setLang(LanguageType lang)
     {
         this.lang = lang;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Sentence sentence = (Sentence) o;
+        return id == sentence.id
+                && wordList.equals(sentence.wordList)
+                && originalSentence.equals(sentence.originalSentence)
+                && translation.equals(sentence.translation)
+                && lang == sentence.lang;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(id, wordList, originalSentence, translation, lang);
     }
 }

@@ -1,6 +1,7 @@
 package org.gosha.kalosha.model;
 
 import javax.persistence.*;
+import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
