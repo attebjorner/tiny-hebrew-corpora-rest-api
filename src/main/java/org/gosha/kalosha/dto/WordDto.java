@@ -1,23 +1,25 @@
 package org.gosha.kalosha.dto;
 
+import lombok.Data;
 import lombok.Getter;
 import org.gosha.kalosha.model.Word;
 
 import java.util.Map;
 
+@Data
 public class WordDto
 {
-    @Getter
-    private final String word;
+    private String word;
 
-    @Getter
-    private final String lemma;
+    private String lemma;
 
-    @Getter
-    private final String pos;
+    private String pos;
 
-    @Getter
-    private final Map<String, String> gram;
+    private Map<String, String> gram;
+
+    public WordDto()
+    {
+    }
 
     public WordDto(String word, String lemma, String pos, Map<String, String> gram)
     {

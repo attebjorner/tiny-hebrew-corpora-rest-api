@@ -6,8 +6,6 @@ public interface WordDao
 {
     Word getById(long id);
 
-    Long getIdByWord(Word word);
-
     long save(Word word);
 
     void update(Word word);

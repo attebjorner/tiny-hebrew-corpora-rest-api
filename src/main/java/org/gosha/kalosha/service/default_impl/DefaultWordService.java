@@ -29,18 +29,6 @@ public class DefaultWordService implements WordService
 
     @Override
     @Transactional
-    public long getIdByWord(Word word)
-    {
-        Long id = wordDao.getIdByWord(word);
-        if (id == null)
-        {
-            throw new NoWordsFoundException("No word with such parameters found");
-        }
-        return id;
-    }
-
-    @Override
-    @Transactional
     public long save(Word word)
     {
         return wordDao.save(word);

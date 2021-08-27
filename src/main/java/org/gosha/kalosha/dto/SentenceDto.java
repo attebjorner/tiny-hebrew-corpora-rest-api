@@ -1,5 +1,6 @@
 package org.gosha.kalosha.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.gosha.kalosha.model.Sentence;
@@ -9,6 +10,7 @@ public class SentenceDto
     @Getter
     private final long id;
 
+    @JsonProperty("original_sentence")
     @Getter
     private final String originalSentence;
 

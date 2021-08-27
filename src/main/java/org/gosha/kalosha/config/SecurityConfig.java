@@ -56,11 +56,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
         http.csrf().disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.exceptionHandling().accessDeniedPage("/forbidden");
         http.authorizeRequests()
                 .antMatchers(baseEndpoint + "query/**")
                 .hasAnyAuthority("USER");
         http.authorizeRequests()
-                .antMatchers(baseEndpoint + "user/**", baseEndpoint + "users", baseEndpoint + "role/**")
+                .antMatchers(
+                        baseEndpoint + "user/**", baseEndpoint + "users",
+                        baseEndpoint + "role/**", baseEndpoint + "word/**",
+                        baseEndpoint + "sentence/**"
+                )
                 .hasAnyAuthority("ADMIN");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(authenticationFilter);
