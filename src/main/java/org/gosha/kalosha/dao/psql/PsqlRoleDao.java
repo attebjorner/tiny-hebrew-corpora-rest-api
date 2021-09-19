@@ -32,8 +32,8 @@ public class PsqlRoleDao implements RoleDao
     @Override
     public Role save(Role role)
     {
-        Session session = sessionFactory.getCurrentSession();
-        Long id = (Long) session.save(role);
+        var session = sessionFactory.getCurrentSession();
+        var id = (Long) session.save(role);
         return session.get(Role.class, id);
     }
 }

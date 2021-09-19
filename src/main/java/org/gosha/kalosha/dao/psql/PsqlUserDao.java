@@ -40,8 +40,8 @@ public class PsqlUserDao implements UserDao
     @Override
     public User save(User user)
     {
-        Session session = sessionFactory.getCurrentSession();
-        Long id = (Long) session.save(user);
+        var session = sessionFactory.getCurrentSession();
+        var id = (Long) session.save(user);
         return session.get(User.class, id);
     }
 

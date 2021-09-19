@@ -36,15 +36,25 @@ public class DefaultWordService implements WordService
 
     @Override
     @Transactional
-    public void update(Word word)
+    public void update(long id, Word word)
     {
+        if (wordDao.getById(id) == null)
+        {
+            throw new NoWordsFoundException("Word with id " + id + " does not exist");
+        }
+        word.setId(id);
         wordDao.update(word);
     }
 
     @Override
     @Transactional
-    public void delete(Word word)
+    public void delete(long id)
     {
+        Word word = wordDao.getById(id);
+        if (word == null)
+        {
+            throw new NoWordsFoundException("Word with id " + id + " does not exist");
+        }
         wordDao.delete(word);
     }
 }

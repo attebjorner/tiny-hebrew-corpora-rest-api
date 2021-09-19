@@ -27,30 +27,28 @@ public class WordController
         this.wordService = wordService;
     }
 
-    @RequestMapping("{id}")
+    @GetMapping("{id}")
     public WordDto getById(@PathVariable long id)
     {
         return wordService.getById(id);
     }
 
-    @RequestMapping("save")
-    public ResponseEntity<Map<String, Long>> saveWord(@RequestParam(name = "word") String encodedWord)
+    @PostMapping
+    public ResponseEntity<Map<String, Long>> saveWord(@RequestBody Word word)
     {
-        Word word = decodeJsonToObject(encodedWord, Word.class);
         return new ResponseEntity<>(Map.of("id", wordService.save(word)), HttpStatus.CREATED);
     }
 
-    @RequestMapping("update")
-    public void updateWord(@RequestParam(name = "word") String encodedWord)
+    @PutMapping("{id}")
+    public void updateWord(@PathVariable long id, @RequestBody Word word)
     {
-
+        wordService.update(id, word);
     }
 
-    @RequestMapping("delete")
+    @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteWord(@RequestParam(name = "word") String encodedWord)
+    public void deleteWord(@PathVariable long id)
     {
-        Word word = decodeJsonToObject(encodedWord, Word.class);
-        wordService.delete(word);
+        wordService.delete(id);
     }
 }

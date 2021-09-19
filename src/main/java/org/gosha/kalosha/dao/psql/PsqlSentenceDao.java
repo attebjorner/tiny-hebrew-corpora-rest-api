@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Repository
 public class PsqlSentenceDao implements SentenceDao
@@ -82,7 +81,7 @@ public class PsqlSentenceDao implements SentenceDao
     @Override
     public List<Sentence> getByGram(Map<String, String> gram, int page, int maxResults)
     {
-        Query<Sentence> query = buildGramQuery(
+        var query = buildGramQuery(
                 new StringBuilder("select distinct s from Word w join w.sentences s where "), gram
         );
         return query.setFirstResult(page * maxResults)
@@ -105,7 +104,7 @@ public class PsqlSentenceDao implements SentenceDao
     @Override
     public List<Sentence> getByLemmaGram(String lemma, Map<String, String> gram, int page, int maxResults)
     {
-        Query<Sentence> query = buildGramQuery(
+        var query = buildGramQuery(
                 new StringBuilder("select distinct s from Word w join w.sentences s where w.lemma = :lemma and "),
                 gram
         );
@@ -118,7 +117,7 @@ public class PsqlSentenceDao implements SentenceDao
     @Override
     public List<Sentence> getByPosGram(String pos, Map<String, String> gram, int page, int maxResults)
     {
-        Query<Sentence> query = buildGramQuery(
+        var query = buildGramQuery(
                 new StringBuilder("select distinct s from Word w join w.sentences s where w.pos = :pos and "),
                 gram
         );
@@ -131,7 +130,7 @@ public class PsqlSentenceDao implements SentenceDao
     @Override
     public List<Sentence> getByLemmaPosGram(String lemma, String pos, Map<String, String> gram, int page, int maxResults)
     {
-        Query<Sentence> query = buildGramQuery(
+        var query = buildGramQuery(
                 new StringBuilder("select distinct s from Word w join w.sentences s where w.lemma = :lemma and w.pos = :pos and "),
                 gram
         );
@@ -144,16 +143,16 @@ public class PsqlSentenceDao implements SentenceDao
 
     private Query<Sentence> buildGramQuery(StringBuilder queryString, Map<String, String> gram)
     {
-        String[] properties = new String[gram.size()];
+        var properties = new String[gram.size()];
         int i;
         for (i = 0; i < properties.length; ++i)
         {
             properties[i] = "w.gram[:k" + i + "] = :v" + i;
         }
         queryString.append("(").append(String.join(" or ", properties)).append(")");
-        Query<Sentence> query = sessionFactory.getCurrentSession().createQuery(queryString.toString(), Sentence.class);
+        var query = sessionFactory.getCurrentSession().createQuery(queryString.toString(), Sentence.class);
         i = 0;
-        for (String key : gram.keySet())
+        for (var key : gram.keySet())
         {
             query.setParameter("k" + i, key).setParameter("v" + i++, gram.get(key));
         }
