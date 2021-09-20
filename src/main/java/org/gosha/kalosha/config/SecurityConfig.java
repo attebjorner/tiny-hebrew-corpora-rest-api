@@ -63,8 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
         http.authorizeRequests()
                 .antMatchers(
                         baseEndpoint + "user/**", baseEndpoint + "users",
-                        baseEndpoint + "role/**", baseEndpoint + "word/**",
-                        baseEndpoint + "sentence/**"
+                        baseEndpoint + "role/**", baseEndpoint + "word/**"
                 )
                 .hasAnyAuthority("ADMIN");
         http.authorizeRequests().anyRequest().authenticated();
